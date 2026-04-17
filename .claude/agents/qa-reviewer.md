@@ -72,6 +72,11 @@ runtime:
 - 프론트: `.ts`/`.tsx`만, `any`/`@ts-ignore` 0건 또는 전부 주석 설명, `@anthropic-ai/sdk` import 0건.
 - 반쪽 스텁: 코드 전역에서 `TODO`, `FIXME`, `throw NotImplemented` 0건.
 
+### 런타임 안전성 (빌드 없이도 잡아야 함 — 빌드 전 실패 방지)
+- **ID 타입 교차 일치**: 백엔드 엔티티/Response DTO 의 id·외래키 필드 Kotlin 타입이 `UUID` 면 프론트 `types.ts` 인터페이스, zod 스키마, API 함수 시그니처 모두 `string` 이어야 한다. 페이지 파일에서 `Number(id)` / `Number.isFinite` / `valueAsNumber: true` 가 FK/PK 에 걸려 있으면 error.
+- **JPA Auditing + OffsetDateTime**: 백엔드 `BaseEntity` 의 `@CreatedDate`/`@LastModifiedDate` 필드 타입이 `OffsetDateTime` 인데 `@Configuration` 어디에도 `@Bean DateTimeProvider` 가 없고 `@EnableJpaAuditing(dateTimeProviderRef = ...)` 참조도 없으면 error (첫 INSERT 시 런타임 크래시 예약됨).
+- **프론트 `vite.config.ts` 의 Node 빌트인 의존성**: `node:path`, `__dirname`, `process.env` 중 하나라도 쓰면서 `package.json` devDependencies 에 `@types/node` 가 없거나 `tsconfig.node.json` 의 `types` 에 `"node"` 가 없으면 error (build 실패).
+
 ### 빌드 가능성 (선택; Bash 사용 가능할 때)
 - 백엔드: `./gradlew build -x test` 성공.
 - 프론트: `npm install --no-audit --no-fund && npm run build` 성공.

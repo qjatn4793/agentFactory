@@ -49,6 +49,7 @@ runtime:
 - **DTO**: `data class` + jakarta.validation 애너테이션.
 - **ID**: `UUID`. `@Id @GeneratedValue(strategy = GenerationType.UUID)` (JPA 3.1+ 표준). 애플리케이션 측에서 UUID를 만들어 INSERT에 포함시키므로 `save()` 호출 직후 반환된 엔티티는 완전 상태이며, DB의 `DEFAULT gen_random_uuid()` 는 안전망으로만 유지한다.
 - **감사 필드**: `createdAt`, `updatedAt` 은 **Spring Data JPA Auditing** 으로 자동 관리. 공통 `@MappedSuperclass BaseEntity` 로 추출하고 모든 도메인 엔티티가 상속. `@CreatedDate`, `@LastModifiedDate` 애너테이션 + `@EntityListeners(AuditingEntityListener::class)`. `Application` 또는 별도 `@Configuration` 에 `@EnableJpaAuditing` 필수 (없으면 자동 채움 동작 안 함).
+- **감사 필드 타입 = `OffsetDateTime` 일 때 DateTimeProvider 필수**: Spring Data Auditing 의 기본 `DateTimeProvider` 는 `LocalDateTime` 만 반환해서 `OffsetDateTime` 필드에 쓰려 하면 런타임 `IllegalArgumentException: Cannot convert unsupported date type java.time.LocalDateTime to java.time.OffsetDateTime` 로 **첫 INSERT 시 크래시** (이전 drift 로 확인됨). 반드시 `@EnableJpaAuditing(dateTimeProviderRef = "auditingDateTimeProvider")` 로 참조하고 `@Bean fun auditingDateTimeProvider(): DateTimeProvider = DateTimeProvider { Optional.of(OffsetDateTime.now(ZoneOffset.UTC)) }` 를 `Application` 또는 `@Configuration` 에 추가.
 - **네이밍**: 컬럼 매핑은 `@Column(name = "snake_case")`.
 
 ## 필수 산출물

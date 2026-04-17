@@ -101,6 +101,8 @@ frontend/
 - `any`, `as any`, `@ts-ignore`, `@ts-expect-error` 금지. 불가피하면 한 줄 주석으로 이유.
 - **`src/vite-env.d.ts` 필수**: `/// <reference types="vite/client" />`. 없으면 `import.meta.env.VITE_*` 접근이 TS2339 로 실패.
 - **`tsconfig.node.json` 은 `composite: true` + `noEmit: true` 를 동시에 설정하지 않는다** — TS6310 (composite 프로젝트는 emit 가능해야 함). `composite: true` 만 두고 `noEmit` 은 생략하거나 `false`.
+- **`vite.config.ts` 에서 Node 빌트인을 쓰면 `@types/node` 세트를 반드시 동반**: `node:path`, `__dirname`, `process.env` 등 중 하나라도 사용하면 (a) `package.json` devDependencies 에 `@types/node` 추가, (b) `tsconfig.node.json` 에 `"types": ["node"]` 추가. 누락 시 빌드 단계 `npm run build` 가 TS2307/TS2304/TS2580 으로 실패 (이전 drift 로 확인됨). Node 빌트인을 안 쓰면 둘 다 불필요.
+- **ID 필드 타입은 백엔드와 반드시 일치**: 백엔드가 UUID (`@GeneratedValue(strategy = GenerationType.UUID)`) 를 쓰면 Jackson 직렬화가 UUID **문자열** 이므로 프론트의 모든 `id`/외래키 필드는 `string` 으로 타이핑. `types.ts` 인터페이스, zod 스키마 (`z.string().uuid()`), API 시그니처 (`(id: string) => ...`), 페이지의 `mutationFn` / `useParams` 파싱 모두 string 으로 통일. `Number(id)`, `Number.isFinite(id)`, `valueAsNumber: true` 를 FK/PK 에 쓰면 런타임에 `NaN` 으로 API 호출 전부 실패 (이전 drift). 도메인 숫자 필드(팔로워 수, 페이지네이션 등) 는 그대로 number.
 - **TanStack Router `useParams({ from })` 의 `from` 리터럴**은 **라우트 트리에서 실제 해당 페이지가 도달되는 전체 경로** 를 정확히 써야 한다. 중첩 부모 라우트(`appRoute` 등)가 있다면 그 prefix 도 포함 — 예: `appRoute` 가 `id: "app"` 로 마운트되고 그 아래에 `bean/$id` 가 있으면 `from: "/app/bean/$id"`. 자식 path 만 쓰면 TS2322/2820 로 실패. 라우터에 `/app/bean/$id` 로 등록했으면서 컴포넌트에서 `/bean/$id` 로 쓰는 불일치를 반드시 피한다.
 
 ## 하지 말 것

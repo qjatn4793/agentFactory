@@ -1,0 +1,10 @@
+.claude/logs/
+.claude/settings.local.json
+.DS_Store
+node_modules/
+dist/
+build/
+.gradle/
+*.log
+generated/*/.env.docker
+generated/*

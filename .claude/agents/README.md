@@ -60,3 +60,5 @@ idea
 - [frontend-builder.md](frontend-builder.md) — MvpSpec + BackendArtifacts → TS/React/Vite 파일
 - [qa-reviewer.md](qa-reviewer.md) — 산출물 정합성 감사 → ReviewReport
 - [deployer.md](deployer.md) — Dockerfile + nginx.conf + docker-compose.yml (qa pass 전제)
+- [polish-auditor.md](polish-auditor.md) — 기존 MVP 완성도 갭 진단 (쓰기 권한 없음) → PolishAuditReport
+- [polish-applier.md](polish-applier.md) — 사용자가 선택한 폴리싱 항목만 적용 + qa 재검증 → PolishApplyReport

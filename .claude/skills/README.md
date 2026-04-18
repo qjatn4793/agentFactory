@@ -32,6 +32,7 @@ description: 한 줄 아이디어를 받아 전체 MVP 생성 파이프라인(pl
 - [generate-mvp/SKILL.md](generate-mvp/SKILL.md) — 한 줄 아이디어 → 전체 파이프라인(planner→...→deployer) 실행
 - [review-generated/SKILL.md](review-generated/SKILL.md) — 기존 MVP 에 대해 qa-reviewer 재실행, 리포트만
 - [add-entity/SKILL.md](add-entity/SKILL.md) — 기존 MVP 에 엔티티 1개 **증분 추가** (기존 파일 비파괴)
+- [polish/SKILL.md](polish/SKILL.md) — 완성도 갭 진단(polish-auditor) → 선택 → 적용(polish-applier) → qa 재검증. UX · 견고성 · 중복 제거 중심
 
 ### 런타임 (docker compose)
 - [run-mvp/SKILL.md](run-mvp/SKILL.md) — `docker compose up --build -d` + 호스트 포트 탐지 + URL 출력

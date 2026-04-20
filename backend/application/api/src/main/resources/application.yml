@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: agentfactory-api
+  r2dbc:
+    url: r2dbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:agentfactory}
+    username: ${DB_USERNAME:agentfactory}
+    password: ${DB_PASSWORD:agentfactory}
+  flyway:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:agentfactory}
+    user: ${DB_USERNAME:agentfactory}
+    password: ${DB_PASSWORD:agentfactory}
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    enabled: ${FLYWAY_ENABLED:true}
+
+server:
+  port: ${SERVER_PORT:8080}
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

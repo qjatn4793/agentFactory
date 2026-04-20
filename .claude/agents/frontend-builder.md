@@ -8,7 +8,7 @@ runtime:
   consumes: [MvpSpec, BackendArtifacts]
   produces: FrontendArtifacts
   depends_on: [mvp-planner, backend-builder]
-  rules: [general, stack, mvp-generation]
+  rules: [general, mvp-generation, "frontend/*"]
 ---
 
 # frontend-builder

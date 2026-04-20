@@ -8,7 +8,7 @@ runtime:
   consumes: [idea]
   produces: MvpSpec
   depends_on: []
-  rules: [general, stack, mvp-generation]
+  rules: [general, mvp-generation]
 ---
 
 # mvp-planner

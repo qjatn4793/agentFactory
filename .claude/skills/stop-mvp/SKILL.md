@@ -1,6 +1,6 @@
 ---
 name: stop-mvp
-description: 실행 중인 MVP 컨테이너 3종을 내린다. **postgres 볼륨은 유지** — 데이터 보존. 볼륨까지 삭제하려면 `/reset-mvp`.
+description: 실행 중인 MVP 컨테이너 3종을 내린다. **mysql 볼륨은 유지** — 데이터 보존. 볼륨까지 삭제하려면 `/reset-mvp`.
 ---
 
 # /stop-mvp
@@ -25,7 +25,7 @@ cd generated/<jobId> && docker compose down
 
 ```
 정지됨 — <jobId>
-  볼륨 유지:  agentfactory_<jobId>_pgdata (데이터 보존)
+  볼륨 유지:  agentfactory_<jobId>_mysqldata (데이터 보존)
   재실행:    /run-mvp <jobId>
   완전 삭제: /reset-mvp <jobId>
 ```

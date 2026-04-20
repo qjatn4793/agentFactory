@@ -6,23 +6,34 @@
 
 - 드라이버: `io.asyncer:r2dbc-mysql:1.3.0`.
 - 리포지토리: `org.springframework.data.repository.kotlin.CoroutineCrudRepository` 또는 `ReactiveCrudRepository`. MVP 는 Coroutine 버전 선호.
-- 엔티티:
+- 엔티티 (Persistable 구현 — JVM signature 충돌 회피 패턴):
   ```kotlin
   @Table("todos")
   data class TodoEntity(
-      @Id @Column("id") val id: String,            // UUID CHAR(36)
+      @Id
+      @Column("id")
+      @get:JvmName("getIdValue")                   // val id 의 Kotlin 자동 getter 이름을 getIdValue() 로 변경
+      val id: String,                              // UUID CHAR(36)
       @Column("title") val title: String,
-      @Column("created_at") val createdAt: OffsetDateTime,
-      @Column("updated_at") val updatedAt: OffsetDateTime,
+      @Column("created_at") val createdAt: OffsetDateTime? = null,
+      @Column("updated_at") val updatedAt: OffsetDateTime? = null,
   ) : Persistable<String> {
       @Transient
       private var _isNew: Boolean = true
-      override fun getId() = id
+
+      override fun getId(): String = id            // Persistable 의 getId() 를 명시적으로 override
       override fun isNew(): Boolean = _isNew
       fun markNotNew(): TodoEntity = apply { _isNew = false }
   }
   ```
-- R2DBC 는 JPA 의 `@GeneratedValue` 가 없다 → **애플리케이션에서 `UUID.randomUUID()` 생성 후 주입**.
+- **왜 `@get:JvmName("getIdValue")` 와 `override fun getId()` 가 둘 다 필요한가**:
+  - Kotlin `val id: String` 은 기본적으로 `getId(): String` 자동 getter 를 생성.
+  - `Persistable<String>` (Java 인터페이스) 은 `getId(): String?` (nullable) 을 요구.
+  - 이 둘이 JVM 에서 동일 이름·다른 반환 타입을 가지려 하므로 컴파일 에러 2종 발생:
+    1. `override val id: String` 로 바꾸면 → `'id' overrides nothing` (Java 인터페이스는 Kotlin property 가 아니므로 override 불가).
+    2. `val id: String` + `override fun getId(): String = id` 만 두면 → `Platform declaration clash: getId()Ljava/lang/String;` (자동 getter 와 override 함수가 동일 signature).
+  - 해결: `@get:JvmName("getIdValue")` 로 자동 getter 이름을 다른 것으로 바꾸고, `override fun getId()` 는 명시 구현. Kotlin 코드에서는 여전히 `entity.id` 로 접근 가능.
+- R2DBC 는 JPA 의 `@GeneratedValue` 가 없다 → **애플리케이션에서 `UUID.randomUUID().toString()` 생성 후 주입**.
 - Insert/Update 판정은 `Persistable<ID>` 구현으로 명시 (R2DBC 는 id 가 null 이 아니면 default 로 update 시도 — `isNew()` 를 반드시 제어).
 
 ## 2. JPA (보조)

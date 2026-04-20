@@ -1,6 +1,6 @@
 ---
 name: reset-mvp
-description: MVP 컨테이너 + **postgres 볼륨까지** 완전 삭제. 초기 상태로 되돌릴 때만 사용. 파괴적 작업이므로 반드시 사용자 확인 후 실행.
+description: MVP 컨테이너 + **mysql 볼륨까지** 완전 삭제. 초기 상태로 되돌릴 때만 사용. 파괴적 작업이므로 반드시 사용자 확인 후 실행.
 ---
 
 # /reset-mvp
@@ -17,8 +17,8 @@ description: MVP 컨테이너 + **postgres 볼륨까지** 완전 삭제. 초기 
 
 ```
 경고: 다음 항목이 영구 삭제됩니다.
-  - 컨테이너: postgres, backend, frontend (jobId=<jobId>)
-  - 볼륨: agentfactory_<jobId>_pgdata (DB 데이터 전체)
+  - 컨테이너: mysql, backend, frontend (jobId=<jobId>)
+  - 볼륨: agentfactory_<jobId>_mysqldata (DB 데이터 전체)
   - 빌드된 이미지는 유지.
   - 소스 코드 파일은 유지.
 
@@ -33,14 +33,14 @@ description: MVP 컨테이너 + **postgres 볼륨까지** 완전 삭제. 초기 
 cd generated/<jobId> && docker compose down -v
 ```
 
-`-v` 로 명명 볼륨(`agentfactory_<jobId>_pgdata`) 까지 제거.
+`-v` 로 명명 볼륨(`agentfactory_<jobId>_mysqldata`) 까지 제거.
 
 ## 보고
 
 ```
 초기화 완료 — <jobId>
   컨테이너: 삭제됨
-  볼륨:    agentfactory_<jobId>_pgdata 삭제됨
+  볼륨:    agentfactory_<jobId>_mysqldata 삭제됨
   이미지:  유지 (다음 /run-mvp 시 재사용)
   다시 실행: /run-mvp <jobId>  (Flyway 가 빈 DB 에 V001 부터 재실행)
 ```

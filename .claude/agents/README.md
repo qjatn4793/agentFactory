@@ -35,7 +35,7 @@ runtime:
   consumes: [InputArtifact, ...]              # 입력 아티팩트 타입
   produces: OutputArtifact                    # 출력 아티팩트 타입
   depends_on: [agentName, ...]                # 이 에이전트보다 먼저 실행되어야 하는 것
-  rules: [general, stack, mvp-generation]     # 런타임이 prepend할 rules/<name>.md
+  rules: [general, mvp-generation, "backend/*"]  # 런타임이 prepend할 rules/<path>.md. "backend/*" 는 폴더 전체 참조
 ```
 
 ## 파이프라인
@@ -55,7 +55,7 @@ idea
 ## 현재 에이전트
 
 - [mvp-planner.md](mvp-planner.md) — 한 줄 아이디어 → MvpSpec
-- [schema-designer.md](schema-designer.md) — MvpSpec → SchemaPlan (PostgreSQL + Flyway)
+- [schema-designer.md](schema-designer.md) — MvpSpec → SchemaPlan (MySQL 8 + Flyway)
 - [backend-builder.md](backend-builder.md) — MvpSpec + SchemaPlan → Kotlin/Spring Boot 파일
 - [frontend-builder.md](frontend-builder.md) — MvpSpec + BackendArtifacts → TS/React/Vite 파일
 - [qa-reviewer.md](qa-reviewer.md) — 산출물 정합성 감사 → ReviewReport

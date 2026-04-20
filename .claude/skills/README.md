@@ -38,7 +38,7 @@ description: 한 줄 아이디어를 받아 전체 MVP 생성 파이프라인(pl
 - [run-mvp/SKILL.md](run-mvp/SKILL.md) — `docker compose up --build -d` + 호스트 포트 탐지 + URL 출력
 - [stop-mvp/SKILL.md](stop-mvp/SKILL.md) — 컨테이너 내림, 볼륨 유지
 - [list-mvps/SKILL.md](list-mvps/SKILL.md) — 실행 중 MVP 목록 + URL 테이블
-- [reset-mvp/SKILL.md](reset-mvp/SKILL.md) — 컨테이너 + postgres 볼륨 완전 삭제 (파괴적 · 사용자 확인 필수)
+- [reset-mvp/SKILL.md](reset-mvp/SKILL.md) — 컨테이너 + mysql 볼륨 완전 삭제 (파괴적 · 사용자 확인 필수)
 
 ## 아티팩트 레이아웃 (스킬 간 공유 계약)
 

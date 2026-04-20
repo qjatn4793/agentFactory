@@ -8,7 +8,7 @@ runtime:
   consumes: [PolishAuditReport, SelectedItemIds]
   produces: PolishApplyReport
   depends_on: [polish-auditor, qa-reviewer]
-  rules: [general, stack, mvp-generation]
+  rules: [general, mvp-generation, "backend/*", "frontend/*"]
 ---
 
 # polish-applier

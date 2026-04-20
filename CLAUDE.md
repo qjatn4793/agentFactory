@@ -32,11 +32,20 @@ Claude가 이 프로젝트에서 일관되게 동작하도록 `.claude/` 를 역
 
 ## 규칙 (rules/)
 
-아래 규칙은 이 파일을 통해 항상 컨텍스트에 로드된다. 에이전트/스킬 프롬프트에서도 필요한 항목을 인용할 것.
+전역 규칙만 이 파일에서 import — 항상 컨텍스트에 로드된다.
 
 @.claude/rules/general.md
-@.claude/rules/stack.md
 @.claude/rules/mvp-generation.md
+
+**스택 규칙은 폴더 기반 — 전역 import 하지 않는다.**
+
+- `rules/backend/` — Kotlin/Spring Boot 백엔드 전용 (stack, layering, naming, domain-purity, persistence, error-handling)
+- `rules/frontend/` — TypeScript 프론트엔드 전용 (stack)
+
+각 에이전트가 frontmatter `runtime.rules` 배열에 필요한 항목을 상대 경로로 지정해 참조한다. 예:
+- `backend-builder` → `[general, mvp-generation, "backend/*"]`
+- `frontend-builder` → `[general, mvp-generation, "frontend/*"]`
+- `qa-reviewer` → `[general, mvp-generation, "backend/*", "frontend/*"]`
 
 ## 명령어
 

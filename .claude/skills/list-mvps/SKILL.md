@@ -20,7 +20,7 @@ docker ps --filter "label=agentfactory.jobId" \
 
 ### 2. jobId 별 그룹핑 + 호스트 포트 추출
 
-한 jobId 당 3 컨테이너(postgres, backend, frontend) 가 나오므로 `frontend` 서비스의 `Ports` 필드에서 호스트 포트만 추출. `0.0.0.0:xxxxx->80/tcp` 패턴.
+한 jobId 당 3 컨테이너(mysql, backend, frontend) 가 나오므로 `frontend` 서비스의 `Ports` 필드에서 호스트 포트만 추출. `0.0.0.0:xxxxx->80/tcp` 패턴.
 
 ### 3. 디스크 상 jobId 와 교차 검증
 

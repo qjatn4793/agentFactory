@@ -8,7 +8,7 @@ runtime:
   consumes: [MvpSpec, BackendArtifacts, FrontendArtifacts]
   produces: PolishAuditReport
   depends_on: [qa-reviewer]
-  rules: [general, stack, mvp-generation]
+  rules: [general, mvp-generation, "backend/*", "frontend/*"]
 ---
 
 # polish-auditor

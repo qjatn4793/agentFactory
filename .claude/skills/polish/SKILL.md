@@ -1,6 +1,6 @@
 ---
 name: polish
-description: 기존 MVP(`generated/<jobId>/`) 의 완성도 갭을 진단(polish-auditor) → 사용자 선택 → 적용(polish-applier) → qa 재검증. 기능 추가가 아닌 UX · 견고성 · 중복 제거 중심. 스키마/엔티티 변경은 `/add-entity` 사용.
+description: 기존 MVP(`generated/<jobId>/`) 의 완성도 갭을 진단(polish-auditor) → 사용자 선택 → 적용(polish-applier) → qa 재검증. 기능 추가가 아닌 UX · 견고성 · 중복 제거 중심. 신규 엔티티는 `/add-entity`, 기존 엔티티 필드 확장은 `/modify-entity` 사용.
 ---
 
 # /polish

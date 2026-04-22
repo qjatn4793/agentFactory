@@ -32,6 +32,7 @@ description: 한 줄 아이디어를 받아 전체 MVP 생성 파이프라인(pl
 - [generate-mvp/SKILL.md](generate-mvp/SKILL.md) — 한 줄 아이디어 → 전체 파이프라인(planner→...→deployer) 실행
 - [review-generated/SKILL.md](review-generated/SKILL.md) — 기존 MVP 에 대해 qa-reviewer 재실행, 리포트만
 - [add-entity/SKILL.md](add-entity/SKILL.md) — 기존 MVP 에 엔티티 1개 **증분 추가** (기존 파일 비파괴)
+- [modify-entity/SKILL.md](modify-entity/SKILL.md) — 기존 엔티티의 **필드 확장** (추가 · nullable 완화 · 길이 확장 · enum 값 추가). ALTER TABLE 로 증분 마이그레이션, 파괴적 연산(삭제/리네임/타입변경) 거부
 - [polish/SKILL.md](polish/SKILL.md) — 완성도 갭 진단(polish-auditor) → 선택 → 적용(polish-applier) → qa 재검증. UX · 견고성 · 중복 제거 중심
 
 ### 런타임 (docker compose)
